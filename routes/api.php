@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::prefix("/items")->controller(ItemController::class)->group(function(){
+    Route::get("/units", "getUnits");
+    Route::get("/categories", "getCategories");
+
+    Route::get("/", "getAll");
+    Route::get("/{id}", "get");
+    Route::post("/", "create");
+    Route::put("/{id}", "update");
+    Route::delete("/{id}", "delete");
 });
