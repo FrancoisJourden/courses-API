@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::prefix("/items")->controller(ItemController::class)->group(function(){
+Route::prefix("/items")->controller(ItemController::class)->group(function () {
     Route::get("/units", "getUnits");
     Route::get("/categories", "getCategories");
 
@@ -28,4 +29,12 @@ Route::prefix("/items")->controller(ItemController::class)->group(function(){
     Route::post("/", "create");
     Route::put("/{id}", "update");
     Route::delete("/{id}", "delete");
+});
+
+Route::prefix("/commissions")->controller(CommissionController::class)->group(function () {
+    Route::get("/current", "getCurrent");
+    Route::get("/olds", "getOlds");
+    Route::get("/{id}", "get");
+    Route::get("/", "getAll");
+    Route::delete('/', "endCurrent");
 });
