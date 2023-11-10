@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Commission;
 
-class CommissionController extends Controller
-{
-    public function getCurrent(){
+class CommissionController extends Controller {
+    public function getCurrent() {
         return Commission::withoutTrashed()->first();
     }
 
-    public function getOlds(){
+    public function getOlds() {
         return Commission::onlyTrashed()->get();
     }
 
-    public function getAll(): array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection {
+    public function getAll() {
         return Commission::withTrashed()->get();
     }
 
-    public function get(int $id){
+    public function get(int $id) {
         return Commission::find($id);
     }
 
-    public function endCurrent(){
-        $current = Commission::withoutTrashed()->first();
-
+    public function endCurrent() {
+        $articles_keep = Commission::withoutTrashed()->first()->articles;
         Commission::withoutTrashed()->delete();
-        Commission::create([]);
+
+        $new = Commission::create([]);
+        $articles_keep->each(fn($article) => $new->articles->save($article));
 
         return response()->json(null, 204);
     }

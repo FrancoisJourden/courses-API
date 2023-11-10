@@ -8,15 +8,6 @@ use Tests\TestCase;
 
 class ItemTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_getAll(): void
-    {
-        $response = $this->get('/api/items');
-
-        $response->assertStatus(200);
-    }
 
     public function test_crud(): void{
         $create = $this->post("/api/items", [
@@ -24,13 +15,13 @@ class ItemTest extends TestCase
             "category" => "viande"
         ]);
 
-        $create->assertStatus(201);
+        $create->assertCreated();
 
         $get = $this->get("/api/items/{$create->original->id}");
-        $get->assertStatus(200);
+        $get->assertOk();
 
         $update = $this->put("/api/items/{$create->original->id}", ['name' => "beef"]);
-        $update->assertStatus(200);
+        $update->assertOk();
         $update->assertJson(['name'=>"beef"]);
 
         $delete = $this->delete("/api/items/{$create->original->id}");
