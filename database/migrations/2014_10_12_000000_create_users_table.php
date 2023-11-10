@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -19,6 +21,18 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        $username = "root";
+        $email = "root@localhost";
+        $password = Str::random();
+
+        User::create([
+            'name' => $username,
+            'email' => $email,
+            'password' => $password
+        ]);
+
+        echo "User created.\nusername: $username\npassword:$password\n";
     }
 
     /**

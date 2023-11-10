@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Tests\AuthenticatedTest;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 
@@ -19,13 +20,13 @@ class AuthTest extends TestCase
         ])->assertUnauthorized();
 
         $this->post('/api/login', [
-            'email' => 'test@test.com',
+            'email' => AuthenticatedTest::EMAIL,
             'password' => "t"
         ])->assertUnauthorized();
 
         $this->post('/api/login', [
-            'email' => 'test@test.com',
-            'password' => "test12"
+            'email' => AuthenticatedTest::EMAIL,
+            'password' => AuthenticatedTest::PASSWORD
         ])->assertOk()->assertJsonStructure([
             'user',
             'authorisation' => [
