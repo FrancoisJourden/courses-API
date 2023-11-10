@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ArticleTest extends TestCase {
+class ArticleTest extends AuthenticatedTest {
 
     public function test_crud(): void {
         $item = $this->post("/api/items", [
