@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -25,7 +26,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
-            ], 401);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = Auth::user();
@@ -51,15 +52,10 @@ class AuthController extends Controller
             'password' => $request->password
         ]);
 
-        $token = Auth::login($user);
         return response()->json([
             'message' => "User created successfully",
             'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
+        ], Response::HTTP_CREATED);
     }
 
     public function logout(){

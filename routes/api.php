@@ -20,12 +20,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
-    Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
 
 Route::middleware('auth')->group(function () {
+    Route::post('register',[AuthController::class, 'register']);
+
     Route::prefix("/items")->controller(ItemController::class)->group(function () {
         Route::get("/units", "getUnits");
         Route::get("/categories", "getCategories");
