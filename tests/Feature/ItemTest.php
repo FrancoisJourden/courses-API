@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ItemTest extends TestCase
+class ItemTest extends AuthenticatedTest
 {
 
     public function test_crud(): void{
@@ -30,7 +30,7 @@ class ItemTest extends TestCase
     }
 
     public function test_get_wrong(): void{
-        $response = $this->get('/api/items/24');
+        $response = $this->get('/api/items/5678904567890');
         echo $response->content();
         $response->assertNotFound();
     }

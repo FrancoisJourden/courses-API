@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CommissionTest extends TestCase
+class CommissionTest extends AuthenticatedTest
 {
     public function test(){
         $this->delete("/api/commissions")->assertNoContent();
