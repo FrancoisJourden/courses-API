@@ -6,12 +6,13 @@ use App\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller {
 
     public function create(Request $request): JsonResponse {
         $item = Item::create($request->all());
-        return response()->json($item, 201);
+        return response()->json($item, Response::HTTP_CREATED);
     }
 
     public function get(int $id) {
@@ -41,6 +42,6 @@ class ItemController extends Controller {
         $item = Item::findOrFail($id);
         $item->delete();
 
-        return response()->json(null, 204);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -2,11 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AuthenticatedTest;
 
 class ArticleTest extends AuthenticatedTest {
 

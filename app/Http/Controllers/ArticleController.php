@@ -7,6 +7,7 @@ use App\Models\Commission;
 use App\Models\Item;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller {
     public function add(Request $request, int $itemId): JsonResponse {
@@ -16,7 +17,7 @@ class ArticleController extends Controller {
         $article->item()->associate(Item::findOrFail($itemId));
         $article->save();
 
-        return response()->json($article, 201);
+        return response()->json($article, Response::HTTP_CREATED);
     }
 
     public function getAll(Request $request) {
@@ -37,7 +38,7 @@ class ArticleController extends Controller {
                     $articles->whereNull('canceled')->whereNull('taken');
                     break;
                 default:
-                    abort(400);
+                    abort(Response::HTTP_BAD_REQUEST);
             }
         }
 
@@ -59,7 +60,7 @@ class ArticleController extends Controller {
         $article = Article::findOrFail($id);
         $article->delete();
 
-        return response()->json(null, 204);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
     public function taken(Request $request, int $id) {

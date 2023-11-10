@@ -12,17 +12,19 @@ class AuthTest extends TestCase
      */
     public function test_example(): void
     {
-        $email = Str::random() . "@test.com";
-        $register = $this->post('/api/register', [
+        $this->post('/api/register', [
             'name' => Str::random(),
-            'email' => $email,
+            'email' => Str::random() . "@test.com",
             'password' => "test12"
-        ])->assertOk();
-
-        $token = $register->original['authorisation']['token'];
+        ])->assertUnauthorized();
 
         $this->post('/api/login', [
-            'email' => $email,
+            'email' => 'test@test.com',
+            'password' => "t"
+        ])->assertUnauthorized();
+
+        $this->post('/api/login', [
+            'email' => 'test@test.com',
             'password' => "test12"
         ])->assertOk()->assertJsonStructure([
             'user',
@@ -32,18 +34,15 @@ class AuthTest extends TestCase
             ]
         ]);
 
-        $this->post('/api/login', [
-            'email' => $email,
-            'password' => "t"
-        ])->assertUnauthorized();
+        $this->post('/api/register', [
+            'name' => Str::random(),
+            'email' => Str::random() . "@test.com",
+            'password' => "test12"
+        ])->assertCreated();
 
-        $this->post('/api/refresh',[], [
-            'Authorization' => "bearer " . $token
-        ])->assertOk();
+        $this->post('/api/refresh')->assertOk();
 
-        $this->post('/api/logout',[], [
-            'Authorization' => "bearer " . $token
-        ])->assertOk();
+        $this->post('/api/logout')->assertOk();
 
     }
 }
