@@ -11,8 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller {
     public function add(Request $request, int $itemId): JsonResponse {
+        $request->validate([
+            'quantity' => "integer|gt:0"
+        ]);
 
-        $article = Article::create([]);
+        $article = Article::create($request->all());
         $article->commission()->associate(Commission::withoutTrashed()->first());
         $article->item()->associate(Item::findOrFail($itemId));
         $article->save();
@@ -50,6 +53,10 @@ class ArticleController extends Controller {
     }
 
     public function update(Request $request, int $id){
+        $request->validate([
+            'quantity' => "integer|gt:0"
+        ]);
+
         $article = Article::findOrFail($id);
         $article->update($request->all());
 

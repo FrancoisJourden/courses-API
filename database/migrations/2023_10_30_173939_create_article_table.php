@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(Item::class)->nullable();
             $table->foreignIdFor(Commission::class)->nullable();
+            $table->integer("quantity")->nullable();
             $table->timestamp("taken")->nullable();
             $table->timestamp("canceled")->nullable();
         });

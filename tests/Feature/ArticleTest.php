@@ -14,8 +14,9 @@ class ArticleTest extends AuthenticatedTest {
         ]);
         $item->assertCreated();
 
-        $create = $this->post("/api/articles/{$item->original->id}");
-        $create->assertCreated();
+        $create = $this->post("/api/articles/{$item->original->id}")->assertCreated();
+        $this->post("/api/articles/{$item->original->id}", ['quantity' => 2])->assertCreated();
+        $this->post("/api/articles/{$item->original->id}", ['quantity' => -3])->assertUnprocessable();
 
         $this->get("/api/articles/{$create->original->id}")->assertOk();
         $this->get('/api/articles')->assertOk();
