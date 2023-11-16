@@ -24,7 +24,7 @@ class ItemController extends Controller {
     }
 
     public function search(Request $request, string $query) {
-        return Item::where('name', 'like', '%' . $query . '%')->get(10);
+        return Item::where('name', 'like', '%' . $query . '%')->take(10)->get();
     }
 
     public function getUnits() {
