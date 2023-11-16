@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
         Route::post("/", "create");
         Route::put("/{id}", "update");
         Route::delete("/{id}", "delete");
+
+        Route::get("/search/{query}", "search");
     });
 
     Route::prefix("/commissions")->controller(CommissionController::class)->group(function () {

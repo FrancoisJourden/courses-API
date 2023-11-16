@@ -23,6 +23,10 @@ class ItemController extends Controller {
         return Item::all();
     }
 
+    public function search(Request $request, string $query) {
+        return Item::where('name', 'like', '%' . $query . '%')->get(10);
+    }
+
     public function getUnits() {
         return response()->json(Item::whereNotNull('unit')->pluck('unit'));
     }
