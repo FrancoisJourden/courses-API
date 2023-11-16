@@ -31,13 +31,13 @@ Route::middleware('auth')->group(function () {
         Route::get("/units", "getUnits");
         Route::get("/categories", "getCategories");
 
+        Route::get("/search/{query?}", "search");
+
         Route::get("/", "getAll");
         Route::get("/{id}", "get");
         Route::post("/", "create");
         Route::put("/{id}", "update");
         Route::delete("/{id}", "delete");
-
-        Route::get("/search/{query}", "search");
     });
 
     Route::prefix("/commissions")->controller(CommissionController::class)->group(function () {
