@@ -65,14 +65,17 @@ class ArticleController extends Controller {
 
     public function cancel(Request $request, int $id) {
         $article = Article::findOrFail($id);
-        $article->delete();
+        $article->canceled = now();
+        $article->save();
 
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return response()->json($article);
     }
 
     public function taken(Request $request, int $id) {
         $article = Article::findOrFail($id);
         $article->taken = now();
         $article->save();
+
+        return response()->json($article);
     }
 }

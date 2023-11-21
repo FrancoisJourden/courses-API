@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'get');
         Route::put('/{id}', 'update');
         Route::put('/validate/{id}', 'taken');
-        Route::delete('/{id}', 'cancel');
+        Route::put('/cancel/{id}', 'cancel');
     });
 
 });
